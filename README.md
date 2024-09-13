@@ -35,10 +35,21 @@ Este proyecto es una API de conversión de moneda desarrollada con **Java** y **
 - **Método**: `GET`
 - **URL**: `/api/convertir`
 - **Parámetros**:
-  - 
-- **Ejemplo de URL**: `http://localhost:8080/api/convertir?monto=100&monedaOrigen=USD&monedaDestino=EUR`
+  - `monto` (double): El monto a convertir.
+  - `monedaOrigen` (String): La moneda de origen (ej. `USD`).
+  - `monedaDestino` (String): La moneda de destino (ej. `EUR`).
+
+- **Ejemplo de URL**: `http://localhost:8080/api/convertir?monto=100&monedaOrigen=USD&monedaDestino=SOL`
 - **Respuesta**:
-  -
+  ```json
+  {
+    "monto": 100,
+    "montoConvertido": 92,
+    "monedaOrigen": "USD",
+    "monedaDestino": "EUR",
+    "tasaCambio": 0.92
+  }
+
 ### 2. Actualizar tasa de cambio
 
 **Descripción**: Actualiza o agrega una nueva tasa de cambio.
@@ -46,7 +57,18 @@ Este proyecto es una API de conversión de moneda desarrollada con **Java** y **
 - **Método**: `POST`
 - **URL**: `/api/tasa`
 - **Request Body**:
-  - 
-- **Ejemplo de URL**: `http://localhost:8080/api/convertir?monto=100&monedaOrigen=USD&monedaDestino=EUR`
+  - `id` (Long): Identificador.
+  - `monedaOrigen` (String): La moneda de origen (ej. `USD`).
+  - `monedaDestino` (String): La moneda de destino (ej. `EUR`).
+  - `tasa` (double): Tipo de conversión entre monedaOrigen y monedaDestino.
+- **Ejemplo de URL**: `http://localhost:8080/api/tasa`
 - **Respuesta**:
-  -
+    - Status: 200 OK
+
+# API de Conversión de Moneda (currency-converter-api)
+**Nota**: cada vez que se realiza una petición de "Actualizar tasa de cambio", se podra ver reflejado en la base de datos H2 de la siguiente manera. Adicionalmente, cada vez se requiera actualizar un registro de la base de datos, en el request body de la petición se debe contemplar el "id" del registro donde se realizar algun cambio en los siguientes campos: `monedaOrigen`,`monedaDestino` y `tasa` y finalmmente realizar la petición, de lo contrario se comenta el "id" para agregar una tasa de cambio.
+[![database-h2.png](https://i.postimg.cc/q7ZQwGxB/database-h2.png)](https://postimg.cc/06Dp2D4h)
+
+
+
+
